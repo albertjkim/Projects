@@ -1,0 +1,65 @@
+---
+title: "Final Project"
+author: "Albert Kim"
+date: "May 6, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fivethirtyeight)
+library(ggplot2)
+library(tidyverse)
+library(ggfortify)
+```
+
+## Model 1.
+### Hate crime vs. Income Inequality + Median House Income
+
+this model will look into both the median house income and the income inequality's effect on hate crime rate given to us by SPLC.
+
+```{r}
+
+indata <- hate_crimes
+lin <- lm(indata$hate_crimes_per_100k_splc ~ indata$gini_index + indata$median_house_inc, data = indata)
+summary(lin)
+```
+The coefficient for median house income is significantly smaller than the coeffecient for gini_index. This is due to the median house income being in the ten-thousands range, while the gini_index is in the tenths range. Other than the very noticable difference in scale, both of the coefficients indicate a positive relationship with the hate crime rate. This meant that a higher median house income corelated with increase in hate crime rate. The adjusted R-squared value is at .29 which is higher than without the additional factor. The added factor increases the quality of the model to better demonstrate a relationship between the predictors and the outcome. 
+
+## Plot of Model 1.
+
+```{r}
+autoplot(lin)
+```
+The plots seem to demonstrate not an obvious pattern. The most significant thing to note would be the points on the top right-hand corner of all of these graphs. This point seems to be far out from the Normal Q-Q estimated line. Due to the point also having a high leverage while having high standardized residuals, it seems the removal of this data point would result in better correlation.
+
+## Confidence Interval Model 1.
+
+```{r}
+confint(lin)
+```
+The interval for gini_index on a 95% level confidence is (19.37,59.36).
+
+## Model 2.
+### Hate Crime vs. Income Inequality + Median Household Income + Share of Unemployed
+
+```{r}
+mod2 <- lm(indata$avg_hatecrimes_per_100k_fbi ~ indata$gini_index + indata$median_house_inc + indata$share_pop_hs)
+summary(mod2)
+```
+The coefficient for median house income is small, but the relationship is negative with the addition of population older than 25 with a high school degree. Although the overall model has become better with the adjusted R-value of 0.41,  the correlation between the predictor and the outcome has changed with the addition of the new variable. The p-value of the median house income increased to an insignificant level, while the p-value of the other variables stayed low and maintained their significance. There are 4 missing variables, but it is insignificant due to the number being very low. 
+
+```{r}
+autoplot(mod2)
+```
+Here once again, we see the plot showing no obvious pattern except for the one on the top right-hand side corner of the graphs. Except for this obvious outlier, the graphs generally look similar to the model 1, which didn't have the additional variable.
+
+## Confidence Interval for Model 2.
+
+```{r}
+confint(mod2)
+```
+The confidence interval range for the 95% confidence level for gini_index is (5.24, 12.35) the coefficient for the gini_index would be expected to lie within the range, showing a likely positive correlation.
+
+
+My results showed that the income disparity variable had the best correlation with the outcome of hate crime rate. P-value of the variable was consistently lowest, and other than the small number of outlier the model did relatively well inrepresenting the correlation between the two variables. This result was in line with the article claming that the income disparity is the best way to predict hate crime rates before, and after the election. I was personally surprised the the amount R-squared value increased by adding on the share_pop_hs variable to the model. I did not expect the addition to also change the correlation between the median_house_inc and the output of hate crime rate. I did not think there were any unreasonable issues with the model. It may be worthwhile to study more about the outliers to better justify why they were so far from the expected values, but with the exception of those special cases the models generally seemed reasonable. 
