@@ -1,5 +1,4 @@
 
-# Programming Assignment 1
 # MATH-UA 250 Mathematics of Finance
 # Portfolio Management
 
