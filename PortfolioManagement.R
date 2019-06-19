@@ -46,7 +46,6 @@ RiskFreeAsset  = "Treasury.Bill.90D"
 
 
 # Part 1: Riskyt Assets Analysis
-# Create a table calculating a-h for the risky assets:
 # 1. mean
 # 2. median
 # 3. standard deviations?
@@ -105,7 +104,7 @@ install.packages("moments")
 # 
 # Part 3: Covariance and Correlationa 
 # 1.	Calculate the covariance matrix 
-# 2. Calculate the correlation matrix
+# 2.  Calculate the correlation matrix
 # 3.	Verify the covariance matrix is non-singular
 # 4.	Verify the covariance matrix is symmetric and positive definite
 
