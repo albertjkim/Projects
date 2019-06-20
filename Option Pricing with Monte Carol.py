@@ -42,9 +42,6 @@ for i in range(I):
         else:
             wt = gauss(0.0,1.0)
             St = St * exp((r - 0.5*sigma**2) * dt + sigma * sqrt(dt) * wt)
-            #
-            # add code for St 
-            # St = ...
             path.append(St)
     S.append(path)
 
